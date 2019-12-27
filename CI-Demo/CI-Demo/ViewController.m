@@ -12,6 +12,8 @@
 
 #import "CIDetectionManage.h"
 
+#import "CIFilterManage.h"
+
 @interface ViewController ()<CIEditorToolBarDelegate,UIGestureRecognizerDelegate>
 {
     UIImageView *_imageV;
@@ -79,7 +81,6 @@
     self.toolBar.frame   = CGRectMake(0, kScreenHeight-bottom-60, kScreenWidth, 60);
 }
 
-
 #pragma mark --
 
 - (void)editorToolBar:(CIEditorToolBar *)bar didSelectIndex:(NSInteger)index {
@@ -89,6 +90,12 @@
             {
                 self.deteImage = [CIDetectionManage ciFaceDetectionWith:_imageV.image];
                 [self.effectImgView setImage:_deteImage];
+            }
+            break;
+        case 1:
+            {
+//                [CIFilterManage sysContainFilters];
+                [self.effectImgView setImage:[CIFilterManage monochromeProcessWith:_imageV.image]];
             }
             break;
         default:

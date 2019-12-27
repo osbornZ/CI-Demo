@@ -10,7 +10,6 @@
 
 static NSString *kCellReuseIdentifier = @"kCellReuseIdentifier";
 
-
 @interface CIEditorToolBar ()<UICollectionViewDelegate,UICollectionViewDataSource>
 
 @property (nonatomic, copy) NSArray<CIModule *> *models;

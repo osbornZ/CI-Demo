@@ -64,7 +64,6 @@
     
 }
 
-
 + (void)drawCycleAtPoint:(CGPoint)point withRadius:(CGFloat)radius {
 
     CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(),1,1,0,1.0);
@@ -73,7 +72,6 @@
     CGContextDrawPath(UIGraphicsGetCurrentContext(), kCGPathStroke);
 
 }
-
 
 
 @end
