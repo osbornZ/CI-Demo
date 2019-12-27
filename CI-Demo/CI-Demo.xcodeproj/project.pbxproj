@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		440D273E23B5F91B006BF516 /* CIEditorToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 440D273D23B5F91B006BF516 /* CIEditorToolBar.m */; };
+		440D274123B5F9DA006BF516 /* CIModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 440D274023B5F9DA006BF516 /* CIModule.m */; };
+		440D274523B60257006BF516 /* CIDetectionManage.m in Sources */ = {isa = PBXBuildFile; fileRef = 440D274423B60257006BF516 /* CIDetectionManage.m */; };
 		848A09011EB48ABB00F1752A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 848A09001EB48ABB00F1752A /* main.m */; };
 		848A09041EB48ABB00F1752A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 848A09031EB48ABB00F1752A /* AppDelegate.m */; };
 		848A09071EB48ABB00F1752A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 848A09061EB48ABB00F1752A /* ViewController.m */; };
@@ -28,6 +31,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		440D273C23B5F91B006BF516 /* CIEditorToolBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CIEditorToolBar.h; sourceTree = "<group>"; };
+		440D273D23B5F91B006BF516 /* CIEditorToolBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CIEditorToolBar.m; sourceTree = "<group>"; };
+		440D273F23B5F9DA006BF516 /* CIModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CIModule.h; sourceTree = "<group>"; };
+		440D274023B5F9DA006BF516 /* CIModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CIModule.m; sourceTree = "<group>"; };
+		440D274323B60257006BF516 /* CIDetectionManage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CIDetectionManage.h; sourceTree = "<group>"; };
+		440D274423B60257006BF516 /* CIDetectionManage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CIDetectionManage.m; sourceTree = "<group>"; };
 		848A08FC1EB48ABB00F1752A /* CI-Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CI-Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		848A09001EB48ABB00F1752A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		848A09021EB48ABB00F1752A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -62,6 +71,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		440D273A23B5F884006BF516 /* Editor */ = {
+			isa = PBXGroup;
+			children = (
+				440D273C23B5F91B006BF516 /* CIEditorToolBar.h */,
+				440D273D23B5F91B006BF516 /* CIEditorToolBar.m */,
+				440D273F23B5F9DA006BF516 /* CIModule.h */,
+				440D274023B5F9DA006BF516 /* CIModule.m */,
+			);
+			name = Editor;
+			sourceTree = "<group>";
+		};
+		440D273B23B5F8BB006BF516 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				848A09241EB48B9B00F1752A /* demoModel.jpg */,
+			);
+			name = Resource;
+			sourceTree = "<group>";
+		};
+		440D274223B5FF1F006BF516 /* Detection */ = {
+			isa = PBXGroup;
+			children = (
+				440D274323B60257006BF516 /* CIDetectionManage.h */,
+				440D274423B60257006BF516 /* CIDetectionManage.m */,
+			);
+			path = Detection;
+			sourceTree = "<group>";
+		};
 		848A08F31EB48ABB00F1752A = {
 			isa = PBXGroup;
 			children = (
@@ -83,12 +120,14 @@
 		848A08FE1EB48ABB00F1752A /* CI-Demo */ = {
 			isa = PBXGroup;
 			children = (
-				848A09241EB48B9B00F1752A /* demoModel.jpg */,
 				848A09021EB48ABB00F1752A /* AppDelegate.h */,
 				848A09031EB48ABB00F1752A /* AppDelegate.m */,
 				848A09051EB48ABB00F1752A /* ViewController.h */,
 				848A09061EB48ABB00F1752A /* ViewController.m */,
 				848A09081EB48ABB00F1752A /* Main.storyboard */,
+				440D273A23B5F884006BF516 /* Editor */,
+				440D274223B5FF1F006BF516 /* Detection */,
+				440D273B23B5F8BB006BF516 /* Resource */,
 				848A090B1EB48ABB00F1752A /* Assets.xcassets */,
 				848A090D1EB48ABB00F1752A /* LaunchScreen.storyboard */,
 				848A09101EB48ABB00F1752A /* Info.plist */,
@@ -179,6 +218,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -221,6 +261,9 @@
 			files = (
 				848A09071EB48ABB00F1752A /* ViewController.m in Sources */,
 				848A09041EB48ABB00F1752A /* AppDelegate.m in Sources */,
+				440D274123B5F9DA006BF516 /* CIModule.m in Sources */,
+				440D273E23B5F91B006BF516 /* CIEditorToolBar.m in Sources */,
+				440D274523B60257006BF516 /* CIDetectionManage.m in Sources */,
 				848A09011EB48ABB00F1752A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -420,6 +463,7 @@
 				848A09201EB48ABB00F1752A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		848A09211EB48ABB00F1752A /* Build configuration list for PBXNativeTarget "CI-DemoTests" */ = {
 			isa = XCConfigurationList;
@@ -428,6 +472,7 @@
 				848A09231EB48ABB00F1752A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

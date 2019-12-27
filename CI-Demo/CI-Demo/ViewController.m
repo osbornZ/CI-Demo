@@ -7,88 +7,90 @@
 //
 
 #import "ViewController.h"
+#import "CIEditorToolBar.h"
+#import "CIModule.h"
 
+#import "CIDetectionManage.h"
 
-@interface ViewController ()
+@interface ViewController ()<CIEditorToolBarDelegate>
 {
-    UIImageView *imageV;
+    UIImageView *_imageV;
+    NSArray *_toolModels;
 }
+
+@property (nonatomic,strong) UIView *bgImgView;
+@property (nonatomic,strong) CIEditorToolBar *toolBar;
+
+@property (nonatomic,strong) UIImage *deteImage;
+
 @end
 
 
 @implementation ViewController
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+        
+    _imageV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"demoModel.jpg"]];
+    _imageV.contentMode = UIViewContentModeScaleAspectFit;
+    [self.view addSubview:_imageV];
     
-//    [self performSelectorInBackground:@selector(faceDetector) withObject:nil];
+    self.bgImgView = [[UIView alloc]initWithFrame:CGRectZero];
+    self.bgImgView.hidden = YES;
+    [self.view addSubview:self.bgImgView];
+
+    self.toolBar = [[CIEditorToolBar alloc]initWithFrame:CGRectZero];
+    self.toolBar.delegate = self;
+    [self.view addSubview:_toolBar];
     
-    [self faceDetector];
+    _toolModels = @[
+            [[CIModule alloc] initWithTitle:@"DeteFace"],
+            [[CIModule alloc] initWithTitle:@"CI-1"],
+            [[CIModule alloc] initWithTitle:@"CI-2"],
+            [[CIModule alloc] initWithTitle:@"CI-3"],
+            [[CIModule alloc] initWithTitle:@"CI-4"],
+            [[CIModule alloc] initWithTitle:@"CI-5"],
+            [[CIModule alloc] initWithTitle:@"CI-6"],
+            [[CIModule alloc] initWithTitle:@"CI-7"],
+            [[CIModule alloc] initWithTitle:@"CI-8"]
+                    ];
+    [_toolBar configToolBarModules:_toolModels];
+    
 }
 
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-
--(void)faceDetector {
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
     
-    imageV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"demoModel.jpg"]];
-    imageV.contentMode = UIViewContentModeScaleAspectFit;
-    [self.view addSubview:imageV];
-    
-    [imageV setTransform:CGAffineTransformMakeScale(1, -1)];
-    [self.view setTransform:CGAffineTransformMakeScale(1, -1)];
-
-    // Execute the method used to markFaces in background
-    [self markFaces:imageV];
-}
-
-- (void)markFaces:(UIImageView *)imageview {
-    CIImage *image = [CIImage imageWithCGImage:imageview.image.CGImage];
-    
-    CIDetector *detector = [CIDetector detectorOfType:CIDetectorTypeFace
-                                              context:nil options:[NSDictionary dictionaryWithObject:CIDetectorAccuracyHigh forKey:CIDetectorAccuracy]];
-    
-    NSArray *features = [detector featuresInImage:image];
-    
-    for(CIFaceFeature* faceFeature in features) {
-        CGFloat faceWidth = faceFeature.bounds.size.width;
-        
-        UIView *faceView = [[UIView alloc] initWithFrame:faceFeature.bounds];
-        faceView.layer.borderWidth = 1;
-        faceView.layer.borderColor = [[UIColor redColor] CGColor];
-        [self.view addSubview:faceView];
-        
-        if(faceFeature.hasLeftEyePosition) {
-            
-            UIView* leftEyeView = [[UIView alloc] initWithFrame:CGRectMake(faceFeature.leftEyePosition.x-faceWidth*0.15, faceFeature.leftEyePosition.y-faceWidth*0.15, faceWidth*0.3, faceWidth*0.3)];
-            [leftEyeView setBackgroundColor:[[UIColor blueColor] colorWithAlphaComponent:0.3]];
-            [leftEyeView setCenter:faceFeature.leftEyePosition];
-            leftEyeView.layer.cornerRadius = faceWidth*0.15;
-            [self.view addSubview:leftEyeView];
-        }
-        
-        if(faceFeature.hasRightEyePosition) {
-            UIView* leftEye = [[UIView alloc] initWithFrame:CGRectMake(faceFeature.rightEyePosition.x-faceWidth*0.15, faceFeature.rightEyePosition.y-faceWidth*0.15, faceWidth*0.3, faceWidth*0.3)];
-             [leftEye setBackgroundColor:[[UIColor blueColor] colorWithAlphaComponent:0.3]];
-             [leftEye setCenter:faceFeature.rightEyePosition];
-            leftEye.layer.cornerRadius = faceWidth*0.15;
-            [self.view addSubview:leftEye];
-        }
-        
-        if(faceFeature.hasMouthPosition) {
-            UIView* mouth = [[UIView alloc] initWithFrame:CGRectMake(faceFeature.mouthPosition.x-faceWidth*0.2, faceFeature.mouthPosition.y-faceWidth*0.2, faceWidth*0.4, faceWidth*0.4)];
-            [mouth setBackgroundColor:[[UIColor greenColor] colorWithAlphaComponent:0.3]];
-            [mouth setCenter:faceFeature.mouthPosition];
-            mouth.layer.cornerRadius = faceWidth*0.2;
-            [self.view addSubview:mouth];
-        }
+    CGFloat bottom = 0;
+    if (@available(iOS 11.0, *)) {
+        bottom = self.view.safeAreaInsets.bottom;
     }
+    self.bgImgView.frame = CGRectMake(0, (kScreenHeight-kScreenWidth)/2, kScreenWidth, kScreenWidth);
+    _imageV.frame        = CGRectMake(0, (kScreenHeight-kScreenWidth)/2, kScreenWidth, kScreenWidth);
+    self.toolBar.frame   = CGRectMake(0, kScreenHeight-bottom-60, kScreenWidth, 60);
+}
+
+
+#pragma mark --
+
+- (void)editorToolBar:(CIEditorToolBar *)bar didSelectIndex:(NSInteger)index {
     
+    self.bgImgView.hidden = YES;
+
+    switch (index) {
+        case 0:
+            {
+                self.deteImage = [CIDetectionManage ciFaceDetectionWith:_imageV.image];
+                [_imageV setImage:_deteImage];
+//                [self.bgImgView setTransform:CGAffineTransformMakeScale(1, -1)];
+//                self.bgImgView.hidden = NO;
+            }
+            break;
+        default:
+            break;
+    }
 }
 
 
