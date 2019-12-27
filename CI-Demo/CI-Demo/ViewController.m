@@ -12,13 +12,13 @@
 
 #import "CIDetectionManage.h"
 
-@interface ViewController ()<CIEditorToolBarDelegate>
+@interface ViewController ()<CIEditorToolBarDelegate,UIGestureRecognizerDelegate>
 {
     UIImageView *_imageV;
     NSArray *_toolModels;
 }
 
-@property (nonatomic,strong) UIView *bgImgView;
+@property (nonatomic,strong) UIImageView *effectImgView;
 @property (nonatomic,strong) CIEditorToolBar *toolBar;
 
 @property (nonatomic,strong) UIImage *deteImage;
@@ -37,13 +37,20 @@
     _imageV.contentMode = UIViewContentModeScaleAspectFit;
     [self.view addSubview:_imageV];
     
-    self.bgImgView = [[UIView alloc]initWithFrame:CGRectZero];
-    self.bgImgView.hidden = YES;
-    [self.view addSubview:self.bgImgView];
+    self.effectImgView = [[UIImageView alloc]initWithFrame:CGRectZero];
+    self.effectImgView.contentMode = UIViewContentModeScaleAspectFit;
+    self.effectImgView.userInteractionEnabled = YES;
+    [self.effectImgView setImage:_imageV.image];
+    [self.view addSubview:self.effectImgView];
 
+    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(actionLongPress:)];
+    longPress.delegate = self;
+    [self.effectImgView addGestureRecognizer:longPress];
+    
     self.toolBar = [[CIEditorToolBar alloc]initWithFrame:CGRectZero];
     self.toolBar.delegate = self;
     [self.view addSubview:_toolBar];
+    
     
     _toolModels = @[
             [[CIModule alloc] initWithTitle:@"DeteFace"],
@@ -67,7 +74,7 @@
     if (@available(iOS 11.0, *)) {
         bottom = self.view.safeAreaInsets.bottom;
     }
-    self.bgImgView.frame = CGRectMake(0, (kScreenHeight-kScreenWidth)/2, kScreenWidth, kScreenWidth);
+    self.effectImgView.frame = CGRectMake(0, (kScreenHeight-kScreenWidth)/2, kScreenWidth, kScreenWidth);
     _imageV.frame        = CGRectMake(0, (kScreenHeight-kScreenWidth)/2, kScreenWidth, kScreenWidth);
     self.toolBar.frame   = CGRectMake(0, kScreenHeight-bottom-60, kScreenWidth, 60);
 }
@@ -77,21 +84,31 @@
 
 - (void)editorToolBar:(CIEditorToolBar *)bar didSelectIndex:(NSInteger)index {
     
-    self.bgImgView.hidden = YES;
-
     switch (index) {
         case 0:
             {
                 self.deteImage = [CIDetectionManage ciFaceDetectionWith:_imageV.image];
-                [_imageV setImage:_deteImage];
-//                [self.bgImgView setTransform:CGAffineTransformMakeScale(1, -1)];
-//                self.bgImgView.hidden = NO;
+                [self.effectImgView setImage:_deteImage];
             }
             break;
         default:
             break;
     }
 }
+
+
+#pragma mark -
+
+- (void)actionLongPress:(UILongPressGestureRecognizer *)gesture {
+ 
+    if (gesture.state == UIGestureRecognizerStateBegan) {
+        self.effectImgView.hidden = YES;
+    } else if (gesture.state == UIGestureRecognizerStateEnded || gesture.state == UIGestureRecognizerStateCancelled) {
+        self.effectImgView.hidden = NO;
+    }
+
+}
+
 
 
 @end
