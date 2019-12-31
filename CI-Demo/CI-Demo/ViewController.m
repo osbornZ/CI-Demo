@@ -15,6 +15,8 @@
 #import "CISlider.h"
 #import "CIFilterManage.h"
 
+#import "CIFilteredImageView.h"
+
 @interface ViewController ()<CIEditorToolBarDelegate,UIGestureRecognizerDelegate>
 {
     UIImageView *_imageV;
@@ -26,6 +28,8 @@
 
 @property (nonatomic,strong) UIImage *deteImage;
 @property (nonatomic,strong) CISlider *ciSlider;
+
+@property (nonatomic,strong) CIFilteredImageView *filteredView;
 
 @end
 
@@ -47,6 +51,12 @@
     [self.effectImgView setImage:_imageV.image];
     [self.view addSubview:self.effectImgView];
 
+    //
+    self.filteredView = [[CIFilteredImageView alloc]initWithFrame:CGRectZero];
+    self.filteredView.userInteractionEnabled = YES;
+    [self.view addSubview:self.filteredView];
+    self.filteredView.alpha = 0;
+    
     UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(actionLongPress:)];
     longPress.delegate = self;
     [self.effectImgView addGestureRecognizer:longPress];
@@ -91,6 +101,7 @@
     _imageV.frame            = CGRectMake(0, (kScreenHeight-kScreenWidth)/2, kScreenWidth, kScreenWidth);
     self.toolBar.frame       = CGRectMake(0, kScreenHeight-bottom-60, kScreenWidth, 60);
     self.ciSlider.frame      = CGRectMake(60, kScreenHeight-bottom-110, kScreenWidth-120, 50);
+    self.filteredView.frame  = CGRectMake(0, (kScreenHeight-kScreenWidth)/2, kScreenWidth, kScreenWidth);
 }
 
 
@@ -112,6 +123,18 @@
 //                [CIFilterManage sysContainFilters];
                 [self.effectImgView setImage:[CIFilterManage monochromeProcessWith:_imageV.image]];
             }
+            break;
+        case 2:
+            {
+                _ciSlider.alpha = 1.0;
+                [self.effectImgView setImage:[CIFilterManage outputImage:_imageV.image withFilterName:@"CIMotionBlur"]];
+            }
+            break;
+        case 3:
+        {
+            [self.filteredView actionGpuProcess];
+            [self.effectImgView setImage:[_filteredView autoAdjustImage]];
+        }
             break;
         default:
             break;

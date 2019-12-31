@@ -49,6 +49,21 @@
     return resultImage;
 }
 
++ (UIImage *)outputImage:(UIImage *)image withFilterName:(NSString *)filterName {
+    
+    CIImage  *ciImage = [[CIImage alloc] initWithImage:image];
+    CIFilter *filter = [CIFilter filterWithName:filterName keysAndValues:kCIInputImageKey, ciImage, nil];
+    [filter setValue:@(10.f) forKey:@"inputRadius"];
+    CIImage *outputImage = [filter outputImage];
+    
+    //
+    CIContext *context = [CIContext contextWithOptions: nil];
+    CGImageRef cgImg   = [context createCGImage:outputImage fromRect:[outputImage extent]];
+    UIImage *resultImage = [UIImage imageWithCGImage:cgImg];
+    CGImageRelease(cgImg);
+    
+    return resultImage;
+}
 
 
 @end

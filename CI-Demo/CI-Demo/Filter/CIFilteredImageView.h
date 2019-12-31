@@ -13,6 +13,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CIFilteredImageView : GLKView
 
+- (void)actionGpuProcess;
+
+- (UIImage *)autoAdjustImage;
 
 @end
 

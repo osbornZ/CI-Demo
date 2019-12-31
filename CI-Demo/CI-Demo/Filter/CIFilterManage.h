@@ -19,6 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (UIImage *)monochromeProcessWith:(UIImage *)image withIntensity:(CGFloat)intensity;
 
++ (UIImage *)outputImage:(UIImage *)image withFilterName:(NSString *)filterName;
+
 @end
 
 NS_ASSUME_NONNULL_END
