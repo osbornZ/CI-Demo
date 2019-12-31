@@ -12,6 +12,7 @@
 
 #import "CIDetectionManage.h"
 
+#import "CISlider.h"
 #import "CIFilterManage.h"
 
 @interface ViewController ()<CIEditorToolBarDelegate,UIGestureRecognizerDelegate>
@@ -24,6 +25,7 @@
 @property (nonatomic,strong) CIEditorToolBar *toolBar;
 
 @property (nonatomic,strong) UIImage *deteImage;
+@property (nonatomic,strong) CISlider *ciSlider;
 
 @end
 
@@ -53,7 +55,16 @@
     self.toolBar.delegate = self;
     [self.view addSubview:_toolBar];
     
-    
+    float sliderX = 60;
+    _ciSlider = [[CISlider alloc] initWithFrame:CGRectMake(sliderX, 0, kScreenWidth-sliderX*2, 50)];
+    [_ciSlider addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
+    [_ciSlider addTarget:self action:@selector(sliderAction:) forControlEvents:UIControlEventTouchUpInside];
+    _ciSlider.minimumValue = 0;
+    _ciSlider.maximumValue = 100;
+    _ciSlider.value = 100;
+    [self.view addSubview:_ciSlider];
+    _ciSlider.alpha = 0;
+
     _toolModels = @[
             [[CIModule alloc] initWithTitle:@"DeteFace"],
             [[CIModule alloc] initWithTitle:@"CI-1"],
@@ -77,14 +88,17 @@
         bottom = self.view.safeAreaInsets.bottom;
     }
     self.effectImgView.frame = CGRectMake(0, (kScreenHeight-kScreenWidth)/2, kScreenWidth, kScreenWidth);
-    _imageV.frame        = CGRectMake(0, (kScreenHeight-kScreenWidth)/2, kScreenWidth, kScreenWidth);
-    self.toolBar.frame   = CGRectMake(0, kScreenHeight-bottom-60, kScreenWidth, 60);
+    _imageV.frame            = CGRectMake(0, (kScreenHeight-kScreenWidth)/2, kScreenWidth, kScreenWidth);
+    self.toolBar.frame       = CGRectMake(0, kScreenHeight-bottom-60, kScreenWidth, 60);
+    self.ciSlider.frame      = CGRectMake(60, kScreenHeight-bottom-110, kScreenWidth-120, 50);
 }
+
 
 #pragma mark --
 
 - (void)editorToolBar:(CIEditorToolBar *)bar didSelectIndex:(NSInteger)index {
-    
+    _ciSlider.alpha = 0;
+
     switch (index) {
         case 0:
             {
@@ -94,6 +108,7 @@
             break;
         case 1:
             {
+                _ciSlider.alpha = 1.0;
 //                [CIFilterManage sysContainFilters];
                 [self.effectImgView setImage:[CIFilterManage monochromeProcessWith:_imageV.image]];
             }
@@ -115,6 +130,20 @@
     }
 
 }
+
+
+- (void)sliderValueChanged:(UISlider *)slider {
+ 
+    [self.effectImgView setImage:[CIFilterManage monochromeProcessWith:_imageV.image withIntensity:(slider.value/100)]];
+
+}
+
+- (void)sliderAction:(UISlider *)slider {
+    
+}
+
+
+#pragma mark - private
 
 
 

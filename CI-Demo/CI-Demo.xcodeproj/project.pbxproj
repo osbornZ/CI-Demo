@@ -11,6 +11,8 @@
 		440D274123B5F9DA006BF516 /* CIModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 440D274023B5F9DA006BF516 /* CIModule.m */; };
 		440D274523B60257006BF516 /* CIDetectionManage.m in Sources */ = {isa = PBXBuildFile; fileRef = 440D274423B60257006BF516 /* CIDetectionManage.m */; };
 		440D274923B61ADC006BF516 /* CIFilterManage.m in Sources */ = {isa = PBXBuildFile; fileRef = 440D274823B61ADC006BF516 /* CIFilterManage.m */; };
+		440D275123BB3372006BF516 /* CISlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 440D275023BB3372006BF516 /* CISlider.m */; };
+		440D275423BB4421006BF516 /* CIFilteredImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 440D275323BB4421006BF516 /* CIFilteredImageView.m */; };
 		848A09011EB48ABB00F1752A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 848A09001EB48ABB00F1752A /* main.m */; };
 		848A09041EB48ABB00F1752A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 848A09031EB48ABB00F1752A /* AppDelegate.m */; };
 		848A09071EB48ABB00F1752A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 848A09061EB48ABB00F1752A /* ViewController.m */; };
@@ -40,6 +42,10 @@
 		440D274423B60257006BF516 /* CIDetectionManage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CIDetectionManage.m; sourceTree = "<group>"; };
 		440D274723B61ADC006BF516 /* CIFilterManage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CIFilterManage.h; sourceTree = "<group>"; };
 		440D274823B61ADC006BF516 /* CIFilterManage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CIFilterManage.m; sourceTree = "<group>"; };
+		440D274F23BB3372006BF516 /* CISlider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CISlider.h; sourceTree = "<group>"; };
+		440D275023BB3372006BF516 /* CISlider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CISlider.m; sourceTree = "<group>"; };
+		440D275223BB4421006BF516 /* CIFilteredImageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CIFilteredImageView.h; sourceTree = "<group>"; };
+		440D275323BB4421006BF516 /* CIFilteredImageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CIFilteredImageView.m; sourceTree = "<group>"; };
 		848A08FC1EB48ABB00F1752A /* CI-Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CI-Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		848A09001EB48ABB00F1752A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		848A09021EB48ABB00F1752A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -105,8 +111,12 @@
 		440D274623B61AC8006BF516 /* Filter */ = {
 			isa = PBXGroup;
 			children = (
+				440D274F23BB3372006BF516 /* CISlider.h */,
+				440D275023BB3372006BF516 /* CISlider.m */,
 				440D274723B61ADC006BF516 /* CIFilterManage.h */,
 				440D274823B61ADC006BF516 /* CIFilterManage.m */,
+				440D275223BB4421006BF516 /* CIFilteredImageView.h */,
+				440D275323BB4421006BF516 /* CIFilteredImageView.m */,
 			);
 			path = Filter;
 			sourceTree = "<group>";
@@ -276,8 +286,10 @@
 				848A09041EB48ABB00F1752A /* AppDelegate.m in Sources */,
 				440D274123B5F9DA006BF516 /* CIModule.m in Sources */,
 				440D273E23B5F91B006BF516 /* CIEditorToolBar.m in Sources */,
+				440D275123BB3372006BF516 /* CISlider.m in Sources */,
 				440D274523B60257006BF516 /* CIDetectionManage.m in Sources */,
 				440D274923B61ADC006BF516 /* CIFilterManage.m in Sources */,
+				440D275423BB4421006BF516 /* CIFilteredImageView.m in Sources */,
 				848A09011EB48ABB00F1752A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
