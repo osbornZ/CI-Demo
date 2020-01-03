@@ -26,8 +26,10 @@
         CIContext *ciContext = [CIContext contextWithEAGLContext:eaglContext];
         self.mycontext = ciContext;
 
+        self.context = eaglContext; //
+        
         UIImage *image = [UIImage imageNamed:@"demoModel.jpg"];
-        self.myImage = [[CIImage alloc]initWithImage:image];
+        self.myImage   = [[CIImage alloc]initWithImage:image];
 
         self.clipsToBounds = YES;
         
@@ -36,18 +38,30 @@
     
 }
 
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    
-    [self setNeedsDisplay];
-}
-
-
+//- (void)layoutSubviews {
+//    [super layoutSubviews];
+//}
 
 - (void)drawRect:(CGRect)rect {
     
-    [self.mycontext drawImage:_myImage inRect:self.bounds fromRect:[_myImage extent]];
-
+    //clearBackground
+    glClearColor(0.949, 0.949, 0.969, 0);
+    glClear(GL_COLOR_BUFFER_BIT);
+    
+    CGRect inputBounds = [_myImage extent];
+    CGRect drawBounds  = CGRectMake(0, 0, self.drawableWidth, self.drawableHeight);
+    
+    if (self.contentMode == UIViewContentModeScaleAspectFit ) {
+       drawBounds = [self realDrawRectWith:inputBounds toRect:drawBounds];
+    }else if (self.contentMode == UIViewContentModeScaleAspectFill) {
+        
+    }else {
+        
+    }
+    
+    [self.mycontext drawImage:_myImage inRect:drawBounds fromRect:[_myImage extent]];
+//    [self.context presentRenderbuffer:GL_RENDERBUFFER]; ？
+    
 }
 
 
@@ -77,6 +91,25 @@
     UIImage *resultImage = [UIImage imageWithCIImage:_myImage];
     return resultImage;
 }
+
+
+- (CGRect)realDrawRectWith:(CGRect)fromRect toRect:(CGRect)toRect {
+    CGFloat fromAspectRatio = fromRect.size.width / fromRect.size.height;
+    CGFloat toAspectRatio   = toRect.size.width / toRect.size.height;
+
+    CGRect fitRect = toRect; //
+
+    if (fromAspectRatio > toAspectRatio) {
+        fitRect.size.height = toRect.size.width / fromAspectRatio;
+        fitRect.origin.y   += (toRect.size.height - fitRect.size.height) * 0.5;
+    } else {
+        fitRect.size.width = toRect.size.height  * fromAspectRatio;
+        fitRect.origin.x += (toRect.size.width - fitRect.size.width) * 0.5;
+    }
+
+    return CGRectIntegral(fitRect);
+}
+
 
 
 @end

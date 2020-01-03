@@ -40,7 +40,7 @@
     
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-        
+    
     _imageV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"demoModel.jpg"]];
     _imageV.contentMode = UIViewContentModeScaleAspectFit;
     [self.view addSubview:_imageV];
@@ -51,11 +51,12 @@
     [self.effectImgView setImage:_imageV.image];
     [self.view addSubview:self.effectImgView];
 
-    //
+    //xxx
     self.filteredView = [[CIFilteredImageView alloc]initWithFrame:CGRectZero];
     self.filteredView.userInteractionEnabled = YES;
+    self.filteredView.contentMode = UIViewContentModeScaleAspectFit;
     [self.view addSubview:self.filteredView];
-    self.filteredView.alpha = 0;
+    self.filteredView.alpha = 0.0;
     
     UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(actionLongPress:)];
     longPress.delegate = self;
@@ -109,6 +110,7 @@
 
 - (void)editorToolBar:(CIEditorToolBar *)bar didSelectIndex:(NSInteger)index {
     _ciSlider.alpha = 0;
+    self.filteredView.alpha = 0.0;
 
     switch (index) {
         case 0:
@@ -132,8 +134,10 @@
             break;
         case 3:
         {
+
+            self.filteredView.alpha = 1.0;
             [self.filteredView actionGpuProcess];
-            [self.effectImgView setImage:[_filteredView autoAdjustImage]];
+//            [self.effectImgView setImage:[_filteredView autoAdjustImage]];
         }
             break;
         default:
@@ -153,7 +157,6 @@
     }
 
 }
-
 
 - (void)sliderValueChanged:(UISlider *)slider {
  
